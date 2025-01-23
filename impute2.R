@@ -13,3 +13,7 @@ db %>% select(maxEducLevel,maxEducLevel1, maxEducLevel2,maxEducLevel3 ,maxEducLe
 
 linear_imput_model <- lm(y_salary_m ~ ingtot + sex   + maxEducLevel3 + maxEducLevel4 + maxEducLevel5 + maxEducLevel6 + maxEducLevel7 , data = db)
 summary(linear_imput_model)
+
+# imputing prediction to NA values
+db<-  db %>%  mutate(y_salary_m = ifelse(is.na(y_salary_m) == TRUE, predicted_y , y_salary_m))
+db %>% select(y_salary_m, predicted_y, y_salary_m  ) %>% head() 
