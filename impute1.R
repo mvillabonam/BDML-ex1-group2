@@ -1,7 +1,6 @@
-db$maxEducLevel<- factor(db$maxEducLevel)
+# calculating the most commun value of maxEducLevel. 
+salary <- as.numeric(names(sort(table(db$y_salary_m), decreasing = TRUE)[1]))
 
-dummy_maxEducLevel <- as.data.frame(model.matrix(~ maxEducLevel - 1, data = db)) 
-#db<- db  %>% cbind(dummy_maxEducLevel) 
-db <- cbind(db, dummy_maxEducLevel)
-
-db %>% select(maxEducLevel,maxEducLevel1, maxEducLevel2,maxEducLevel3 ,maxEducLevel4 ,maxEducLevel5 ,maxEducLevel6, maxEducLevel7 ) %>% head() # Include here your code for your first chosen imputation method
+# Imputing the missing value. 
+db <- db  %>%
+  mutate(y_salary_m = ifelse(is.na(y_salary_m) == TRUE, salary , y_salary_m))
